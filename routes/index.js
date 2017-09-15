@@ -9,6 +9,4 @@ fs.readdirSync( __dirname ).forEach( file => {
   }
 });
 
-console.log( exports );
-
 module.exports = exports;

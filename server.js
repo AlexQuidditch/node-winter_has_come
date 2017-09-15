@@ -1,28 +1,11 @@
 // demo server
-
-const express = require('express');
-const server = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
-
-const routes = require('./routes');
-
-server.use(
-	cors({ origin: '*' })
-);
-
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: true }));
-
-const port = 8080;
-
-server.post( '/' , ( req , res ) => {
-	console.log( req.body );
-	res.json( req.body );
-});
+const server = require('./server/');
+const config = require('./config/');
+const routes = require('./routes/');
 
 server.use( '/user' , routes.user );
+server.use( '/settings' , routes.settings );
 
-server.listen(port);
+server.listen(config.port);
 
-console.log('\n> Listening at http://localhost:' + port + '\n')
+console.log('\n> Listening at http://localhost:' + config.port + '\n')
