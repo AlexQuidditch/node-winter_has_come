@@ -19,37 +19,28 @@ const Images = new Schema({
 	}
 });
 
-const CommonSettings = new Schema({
-	email: {
+const Review = new Schema({
+	id: {
+		type: Number
+	},
+	authorID: {
+		type: Number
+	},
+	text: {
 		type: String
 	},
-	phone: {
-		type: String
-	},
-	link: {
-		type: String
-	},
-	bornDate: {
-		type: Date
-	},
-	password: {
-		type: String
-	},
-	caption: {
-		type: String
-	},
-	publishEmail: {
+	like: {
 		type: Boolean
 	},
-	modified: {
+	created: {
 		type: Date,
 		default: Date.now
 	}
 });
 
 // validation
-// CommonSettings.path('title').validate( value => value.length > 5 && value.length < 70 );
+// Task.path('title').validate( value => value.length > 5 && value.length < 70 );
 
-const CommonSettingsModel = mongoose.model('CommonSettings', CommonSettings);
+const ReviewModel = mongoose.model('Review', Review);
 
-module.exports.CommonSettingsModel = CommonSettingsModel;
+module.exports.ReviewModel = ReviewModel;

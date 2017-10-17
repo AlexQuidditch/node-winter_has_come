@@ -1,6 +1,6 @@
 const express = require('express');
 const server = express();
-const CommonSettingsModel = require('../models/test').CommonSettingsModel;
+const CommonSettingsModel = require('../models/commonSettings').CommonSettingsModel;
 
 server.post( '/' , ( req , res ) => {
 	console.log( req.body );
@@ -27,14 +27,14 @@ server.post( '/ussser' , ( req , res ) => {
 });
 
 server.get( '/ussser/:id' , ( req , res ) => {
-	CommonSettingsModel.findById( req.params.id , ( err , common ) => {
+	CommonSettingsModel.findById( req.params._id , ( err , common ) => {
 		if ( !common ) {
 			res.statusCode = 404;
 			return res.send({ error: 'Article not found!' })
 		}
 		if ( !err ) {
-			console.log( req.params.id );
-			return res.send({ status: 'Ok!' , common })
+			console.log( req.params._id );
+			return res.send({ status : 'Ok!' , common })
 		} else {
 			res.statusCode = 500;
 			res.send({ error: 'Server error' })
