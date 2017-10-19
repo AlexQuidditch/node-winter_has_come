@@ -1,6 +1,6 @@
 /**
- * Created by aleksey.zabaykalsky on 08.10.17.
- */
+* Created by aleksey.zabaykalsky on 08.10.17.
+*/
 
 const express = require('express');
 const server = express();
@@ -34,12 +34,12 @@ server.post( '/:wallID/create-post' , ( req , res ) => {
 		if ( error ) {
 			res.status( 500 ).send( error );
 		} else {
-			
+
 			const newPost = { authorID , time , content , attacments , likes , reposts , comments } = req.body;
 			const Post = Object.assign( new PostModel() , newPost );
-			
+
 			wrapper.posts.unshift( Post );
-			
+
 			wrapper.save( ( err , wrapper ) => {
 				if ( err ) {
 					res.status( 500 ).send( err )

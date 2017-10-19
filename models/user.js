@@ -27,6 +27,9 @@ const User = new Schema({
 	isAgent : {
 		type: Boolean
 	},
+	wallID: {
+		type: String
+	},
 	personal: {
 		avatar: {
 			type: String
@@ -102,22 +105,18 @@ const User = new Schema({
 	},
 	social: {
 		contacts: {
-			text: {
+			vk: {
 				type: String
 			},
-			town: {
+			fb: {
 				type: String
 			},
-			links: [
-				{
-					type: {
-						type: String
-					},
-					value: {
-						type: String
-					}
-				}
-			]
+			skype: {
+				type: String
+			},
+			telegram: {
+				type: String
+			}
 		},
 		teams: {
 			type: Array
@@ -128,9 +127,6 @@ const User = new Schema({
 	},
 	reviews: {
 		type: Array
-	},
-	wallID: {
-		type: String
 	}
 });
 
@@ -142,14 +138,13 @@ User.statics.authenticate = ( email , password , callback ) => {
   		const err = new Error('User not found.');
   		err.status = 401;
   		return callback(err);
-  	}
-  	bcrypt.compare( password, user.personal.password, ( err , result ) => {
-  		if ( result === true ) {
+  	} else {
+			if ( password === user.personal.password ) {
   			return callback( null , user );
-  		} else {
-  			return callback();
-  		}
-  	})
+			} else {
+				return callback();
+			}
+		}
   })
 };
 
@@ -160,11 +155,14 @@ User.pre('save', function (next) {
 		if ( error ) return next( error );
 		user.wallID = wrapper._id;
 	});
-	bcrypt.hash( user.personal.password , 11 , ( err , hash ) => {
-		if (err) return next(err);
-		user.personal.password = hash;
-		next();
-	})
+	next()
+	// if ( user.personal.password.length ) {
+	// 	bcrypt.hash( user.personal.password , 11 , ( err , hash ) => {
+	// 		if (err) return next(err);
+	// 		user.personal.password = hash;
+	// 		next();
+	// 	})
+	// }
 });
 
 // validation
