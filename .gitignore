@@ -15,16 +15,4 @@ yarn-error.log*
 
 storage/
 
-\.idea/dbnavigator\.xml
-
-\.idea/misc\.xml
-
-\.idea/modules\.xml
-
-\.idea/node-time_has_come\.iml
-
-\.idea/vcs\.xml
-
-\.idea/watcherTasks\.xml
-
-\.idea/workspace\.xml
+\.idea/

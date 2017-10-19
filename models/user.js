@@ -24,23 +24,8 @@ const Images = new Schema({
 });
 
 const User = new Schema({
-	username: {
-		type: String,
-		required: true,
-		trim: true
-	},
-	avatar: {
-		type: String
-	},
-	email: {
-		type: String,
-		unique: true,
-		required: true,
-		trim: true
-	},
-	password: {
-		type: String,
-		required: true
+	isAgent : {
+		type: Boolean
 	},
 	personal: {
 		avatar: {
@@ -52,10 +37,19 @@ const User = new Schema({
 		sename: {
 			type: String
 		},
-		age: {
+		email: {
+			type: String
+		},
+		password: {
+			type: String
+		},
+		born: {
 			type: String
 		},
 		gender: {
+			type: String
+		},
+		caption: {
 			type: String
 		}
 	},
@@ -122,30 +116,6 @@ const User = new Schema({
 					value: {
 						type: String
 					}
-				},
-				{
-					type: {
-						type: String
-					},
-					value: {
-						type: String
-					}
-				},
-				{
-					type: {
-						type: String
-					},
-					value: {
-						type: String
-					}
-				},
-				{
-					type: {
-						type: String
-					},
-					value: {
-						type: String
-					}
 				}
 			]
 		},
@@ -165,23 +135,22 @@ const User = new Schema({
 });
 
 User.statics.authenticate = ( email , password , callback ) => {
-  UserModel.findOne({ email })
-    .exec( ( err , user ) => {
-      if ( err ) {
-        return callback(err)
-      } else if ( !user ) {
-        const err = new Error('User not found.');
-        err.status = 401;
-        return callback(err);
-      }
-      bcrypt.compare( password, user.password, ( err , result ) => {
-        if ( result === true ) {
-          return callback( null , user );
-        } else {
-          return callback();
-        }
-      })
-    })
+  UserModel.findOne({ 'personal.email' : email } , ( err , user ) => {
+  	if ( err ) {
+  		return callback(err)
+  	} else if ( !user ) {
+  		const err = new Error('User not found.');
+  		err.status = 401;
+  		return callback(err);
+  	}
+  	bcrypt.compare( password, user.personal.password, ( err , result ) => {
+  		if ( result === true ) {
+  			return callback( null , user );
+  		} else {
+  			return callback();
+  		}
+  	})
+  })
 };
 
 //hashing a password before saving it to the database
@@ -191,11 +160,9 @@ User.pre('save', function (next) {
 		if ( error ) return next( error );
 		user.wallID = wrapper._id;
 	});
-	user.personal.name = user.username;
-	user.personal.avatar = user.avatar;
-	bcrypt.hash( user.password , 11 , ( err , hash ) => {
+	bcrypt.hash( user.personal.password , 11 , ( err , hash ) => {
 		if (err) return next(err);
-		user.password = hash;
+		user.personal.password = hash;
 		next();
 	})
 });

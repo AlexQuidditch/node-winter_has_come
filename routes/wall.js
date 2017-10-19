@@ -39,12 +39,15 @@ server.post( '/:wallID/create-post' , ( req , res ) => {
 			const Post = Object.assign( new PostModel() , newPost );
 			
 			wrapper.posts.unshift( Post );
+			
 			wrapper.save( ( err , wrapper ) => {
 				if ( err ) {
 					res.status( 500 ).send( err )
 				}
 				console.log( wrapper );
-				return res.status( 200 ).send( wrapper );
+				return wrapper.save()
+					.then( response => res.status( 200 ).send( wrapper ) )
+					.catch( error => console.error(error) );
 			});
 		}
 	})

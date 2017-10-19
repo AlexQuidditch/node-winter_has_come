@@ -13,7 +13,6 @@ mongoose.connect(config.mongoose.uri);
 
 const db = mongoose.connection;
 
-//use sessions for tracking logins
 server.use(session({
 	secret: 'work hard',
 	resave: true,

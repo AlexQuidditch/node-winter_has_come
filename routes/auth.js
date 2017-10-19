@@ -5,13 +5,13 @@ const UserModel = require('../models/user').UserModel;
 //POST route for updating data
 server.post('/', ( req , res , next ) => {
 
-	const { email , username , password , avatar } = req.body;
+	const { email , name , password , avatar } = req.body;
 
-  if ( email && username && password && avatar ) {
+  if ( email && name && password && avatar ) {
 
-    const userData = { email , username , password , avatar };
+    const userData = { email , name , password , avatar };
 
-    UserModel.create( userData , ( error , user ) => {
+    UserModel.create( { personal : userData } , ( error , user ) => {
       if ( error ) {
         return next( error );
       } else {
