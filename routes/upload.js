@@ -32,8 +32,13 @@ server.post( '/', upload.array( 'image', 5 ), ( req, res ) => {
 // get image with id
 server.get( '/:id', ( req, res ) => {
 	ImageModel.findOne( { _id : req.params.id } , ( err, image ) => {
-		if ( err ) return res.sendStatus( 404 );
-		fs.createReadStream( path.resolve( UPLOAD_PATH, image.filename ) ).pipe( res );
+		if ( !image ) {
+			return res.status(404).send('Picture not found!')
+		} else if ( err ) {
+			return res.status(500).send('Internal server error')
+		} else {
+			fs.createReadStream( path.resolve( UPLOAD_PATH, image.filename ) ).pipe( res );
+		}
 	})
 });
 
