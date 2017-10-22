@@ -11,7 +11,7 @@ server.post( '/create' , ( req , res ) => {
 	const team = new TeamModel({
 		title , town , budget ,
 		skills , specialization , attached,
-		description , budget , deadline ,
+		description , deadline ,
 		isRush , published
 	} = req.body);
 	team.save( err => {
