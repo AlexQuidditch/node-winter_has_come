@@ -20,9 +20,6 @@ const Images = new Schema({
 });
 
 const Task = new Schema({
-	id: {
-		type: String
-	},
 	authorID: {
 		type: String
 	},
