@@ -4,7 +4,7 @@ const server = express();
 
 server.get( '/' , ( req , res ) => {
 	console.log( req.body );
-	res.json( req.body );
+	res.send( 'qwdqwdqwdqwdqwdqw' );
 });
 
 // server.post( '/ussser' , ( req , res ) => {

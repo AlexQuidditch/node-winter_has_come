@@ -1,1 +1,1 @@
-web: node --debug=8585 server.js
+docker-compose up -d && node server.js
