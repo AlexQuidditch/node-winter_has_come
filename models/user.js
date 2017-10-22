@@ -27,6 +27,9 @@ const User = new Schema({
 	isAgent : {
 		type: Boolean
 	},
+	isOnline : {
+		type: Boolean
+	},
 	wallID: {
 		type: String
 	},
@@ -41,7 +44,9 @@ const User = new Schema({
 			type: String
 		},
 		email: {
-			type: String
+			type: String,
+			require: true,
+			unique: true
 		},
 		password: {
 			type: String
@@ -79,6 +84,23 @@ const User = new Schema({
 			faculty: {
 				type: String
 			}
+		}
+	},
+	registrationDate: {
+		type: String
+	},
+	popularity: {
+		type: Number
+	},
+	responses: {
+		issued: {
+			type: Number
+		},
+		positive: {
+			type: Number
+		},
+		negative: {
+			type: Number
 		}
 	},
 	ratings: {
@@ -155,7 +177,7 @@ User.pre('save', function (next) {
 		if ( error ) return next( error );
 		user.wallID = wrapper._id;
 	});
-	next()
+	next();
 	// if ( user.personal.password.length ) {
 	// 	bcrypt.hash( user.personal.password , 11 , ( err , hash ) => {
 	// 		if (err) return next(err);
