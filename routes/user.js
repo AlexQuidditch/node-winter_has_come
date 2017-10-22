@@ -2,7 +2,7 @@ const express = require('express');
 const server = express();
 // const CommonSettingsModel = require('../models/commonSettings').CommonSettingsModel;
 
-server.post( '/' , ( req , res ) => {
+server.get( '/' , ( req , res ) => {
 	console.log( req.body );
 	res.json( req.body );
 });
