@@ -7,7 +7,7 @@ server.post('/', ( req , res , next ) => {
 
 	const { email , name , password , avatar , gender } = req.body;
 
-  if ( email && name && password && avatar ) {
+  if ( email && name && password && avatar && gender ) {
 
     UserModel.create( { personal : req.body } , ( error , user ) => {
       if ( error ) {
@@ -43,9 +43,9 @@ server.post( '/post-registration/:userID' , ( req , res ) => {
 			return res.status(404).send(err);
 		} else {
 			user.isAgent = req.body.isAgent || user.isAgent;
-			user.personal = req.body.personal;
-			user.information = req.body.information;
-			user.social = req.body.social;
+			user.personal = req.body.personal || user.personal;
+			user.information = req.body.information || user.information;
+			user.social = req.body.social || user.social;
 			user.save()
 				.then( response => res.status( 200 ).send( user ) )
 				.catch( error => {
