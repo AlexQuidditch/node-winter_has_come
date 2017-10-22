@@ -1,0 +1,1 @@
+web: node --debug=8585 server.js
