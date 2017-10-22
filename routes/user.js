@@ -1,14 +1,25 @@
 const express = require('express');
 const server = express();
-// const CommonSettingsModel = require('../models/commonSettings').CommonSettingsModel;
+const UserModel = require('../models/user').UserModel;
 
-server.get( '/' , ( req , res ) => {
-	console.log( req.body );
-	res.send( 'qwdqwdqwdqwdqwdqw' );
+server.get( '/:id' , ( req , res ) => {
+	UserModel.findById( req.params.id , ( error , user ) => {
+		console.log(user);
+		if ( !user ) {
+			return res.status(404).send('User not found!');
+		}
+		if ( !error ) {
+			user.personal.password = '';
+			return res.status(200).send(user.personal);
+		} else {
+			console.error(error);
+			return res.status(500).send('Server error')
+		}
+	})
 });
 
 // server.post( '/ussser' , ( req , res ) => {
-// 	const common = new CommonSettingsModel({ email , phone , link , bornDate , password , caption , publishEmail } = req.body);
+// 	const common = new UserModel({ email , phone , link , bornDate , password , caption , publishEmail } = req.body);
 // 	common.save( err => {
 // 		if ( !err ) {
 // 			console.log('Article created!');
@@ -27,7 +38,7 @@ server.get( '/' , ( req , res ) => {
 // });
 
 // server.get( '/ussser/:id' , ( req , res ) => {
-// 	CommonSettingsModel.findById( req.params._id , ( err , common ) => {
+// 	UserModel.findById( req.params._id , ( err , common ) => {
 // 		if ( !common ) {
 // 			res.statusCode = 404;
 // 			return res.send({ error: 'Article not found!' })
