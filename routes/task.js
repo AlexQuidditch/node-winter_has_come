@@ -4,15 +4,15 @@ const TaskModel = require('../models/task').TaskModel;
 const DraftModel = require('../models/draft').DraftModel;
 
 server.post( '/' , ( req , res ) => {
-	console.log( req.params );
+	console.log( req.body );
 	res.json( req.body );
 });
 
-server.post( '/create-task' , ( req , res ) => {
+server.post( '/create' , ( req , res ) => {
 	const task = new TaskModel({
 		title , town , budget ,
 		skills , specialization , attached,
-		description , budget , deadline ,
+		description , deadline ,
 		isRush , published
 	} = req.body);
 	task.save( err => {
@@ -85,21 +85,21 @@ server.get( '/get/:id' , ( req , res ) => {
 	})
 });
 
-server.put( '/edit/:id' , ( req , res ) => {
-	TaskModel.findById( req.params._id , ( err , task ) => {
-		console.log( req.body );
+server.post( '/edit/:id' , ( req , res ) => {
+	TaskModel.findById( req.params.id , ( err , task ) => {
 		if ( !task ) {
-			res.statusCode = 404;
-			return res.send({ error: 'Tasks not found!' })
+			return res.status(404).send('Tasks not found!')
 		}
 		if ( !err ) {
-			task.completed = req.body || task.completed;
-			task.save((err, task) => {
-				res.status(200).send(task);
-			});
+			task = Object.assign( task , req.body ) || task;
+			task.save()
+				.then( response => res.status( 200 ).send( task ) )
+				.catch( error => {
+					console.error(error);
+					return res.status( 500 ).send( error );
+				});
 		} else {
-			res.statusCode = 500;
-			res.send({ error: 'Server error' })
+			res.status(500).send('Server error')
 		}
 	})
 });
