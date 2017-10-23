@@ -4,13 +4,12 @@ const UserModel = require('../models/user').UserModel;
 
 server.get( '/:id' , ( req , res ) => {
 	UserModel.findById( req.params.id , ( error , user ) => {
-		console.log(user);
 		if ( !user ) {
 			return res.status(404).send('User not found!');
 		}
 		if ( !error ) {
 			user.personal.password = '';
-			return res.status(200).send(user.personal);
+			return res.status(200).send(user);
 		} else {
 			console.error(error);
 			return res.status(500).send('Server error')
