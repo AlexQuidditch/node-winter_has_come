@@ -15,7 +15,7 @@ const UPLOAD_PATH = path.join( process.cwd() , '/storage/uploaded' );
 
 const upload = multer({
 	dest: UPLOAD_PATH,
-	limits: { fileSize: 1000000, files: 5 }
+	limits: { fileSize: 1000000000, files: 5 }
 });
 
 // upload image
