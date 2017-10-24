@@ -17,7 +17,7 @@ server.post( '/create' , ( req , res ) => {
 	} = req.body);
 	task.save( err => {
 		if ( !err ) {
-			console.log('Task created!');
+			console.log( 'Task created! - ' , task._id );
 			return res.send({ status: 'Ok!' , task })
 		} else {
 			console.error(err);
@@ -36,12 +36,12 @@ server.post( '/save-draft' , ( req , res ) => {
 	const draft = new DraftModel({
 		title , town , budget ,
 		skills , specialization , attached,
-		description , budget , deadline ,
+		description , deadline ,
 		isRush
 	} = req.body);
 	draft.save( err => {
 		if ( !err ) {
-			console.log( 'Draft created! ' + draft );
+			console.log( 'Draft created! -' + draft._id );
 			return res.send(draft)
 		} else {
 			console.error(err);
@@ -59,7 +59,7 @@ server.post( '/save-draft' , ( req , res ) => {
 server.get( '/get/all' , ( req , res ) => {
 	TaskModel.find( {} , ( err , tasks ) => {
 		if ( !tasks ) {
-			return res.status(404).send({ error: 'Tasks not found!' })
+			return res.status(404).send('Tasks not found!')
 		}
 		if ( !err ) {
 			return res.send(tasks)
@@ -73,8 +73,7 @@ server.get( '/get/all' , ( req , res ) => {
 server.get( '/get/:id' , ( req , res ) => {
 	TaskModel.findById( req.params.id , ( err , task ) => {
 		if ( !task ) {
-			res.statusCode = 404;
-			return res.send({ error: 'Task not found!' })
+			return res.status(404).send({ error: 'Task not found!' })
 		}
 		if ( !err ) {
 			return res.send(task)
