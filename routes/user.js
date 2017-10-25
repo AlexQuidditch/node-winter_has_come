@@ -17,6 +17,29 @@ server.get( '/:id' , ( req , res ) => {
 	})
 });
 
+server.post( '/edit/:id' , ( req , res ) => {
+	UserModel.findById( req.params.id , ( error , user ) => {
+		if ( !user ) {
+			return res.status(404).send('User not found!');
+		}
+		if ( !error ) {
+			user = Object.assign( user , req.body ) || user;
+			user.save()
+				.then( user => {
+					console.log( `user ${ user._id } edited` );
+					return res.status( 200 ).send( user )
+				})
+				.catch( error => {
+					console.error(error);
+					return res.status( 500 ).send( error );
+				});
+		} else {
+			console.error(error);
+			return res.status(500).send('Server error')
+		}
+	})
+});
+
 // server.post( '/ussser' , ( req , res ) => {
 // 	const common = new UserModel({ email , phone , link , bornDate , password , caption , publishEmail } = req.body);
 // 	common.save( err => {

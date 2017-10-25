@@ -84,6 +84,9 @@ const User = new Schema({
 			faculty: {
 				type: String
 			}
+		},
+		about: {
+			type: String
 		}
 	},
 	registrationDate: {

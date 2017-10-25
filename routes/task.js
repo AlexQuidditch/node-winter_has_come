@@ -92,7 +92,10 @@ server.post( '/edit/:id' , ( req , res ) => {
 		if ( !err ) {
 			task = Object.assign( task , req.body ) || task;
 			task.save()
-				.then( response => res.status( 200 ).send( task ) )
+				.then( task => {
+					console.log( `Task ${ task._id } edited` );
+					return res.status( 200 ).send( task )
+				})
 				.catch( error => {
 					console.error(error);
 					return res.status( 500 ).send( error );
