@@ -18,7 +18,7 @@ server.post( '/create' , ( req , res ) => {
 	task.save( err => {
 		if ( !err ) {
 			console.log( 'Task created! - ' , task._id );
-			return res.send({ status: 'Ok!' , task })
+			return res.status(200).send(task);
 		} else {
 			console.error(err);
 			if ( err === 'ValidationError' ) {
@@ -42,15 +42,13 @@ server.post( '/save-draft' , ( req , res ) => {
 	draft.save( err => {
 		if ( !err ) {
 			console.log( 'Draft created! -' + draft._id );
-			return res.send(draft)
+			return res.status(200).send(draft)
 		} else {
 			console.error(err);
 			if ( err === 'ValidationError' ) {
-				res.statusCode = 400;
-				res.send({ error: 'Validation error' })
+				res.status(400).send({ error: 'Validation error' })
 			} else {
-				res.statusCode = 500;
-				res.send({ error: 'Server error' })
+				res.status(500).send({ error: 'Server error' })
 			}
 		}
 	})
@@ -78,8 +76,7 @@ server.get( '/get/:id' , ( req , res ) => {
 		if ( !err ) {
 			return res.send(task)
 		} else {
-			res.statusCode = 500;
-			res.send({ error: 'Server error' })
+			res.status(500).send({ error: 'Server error' })
 		}
 	})
 });
