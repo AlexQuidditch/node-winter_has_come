@@ -74,7 +74,7 @@ server.get( '/get/:id' , ( req , res ) => {
 			return res.status(404).send({ error: 'Task not found!' })
 		}
 		if ( !err ) {
-			return res.send(task)
+			return res.status( 200 ).send( task )
 		} else {
 			res.status(500).send({ error: 'Server error' })
 		}
