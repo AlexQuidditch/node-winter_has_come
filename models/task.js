@@ -66,8 +66,8 @@ const Task = new Schema({
 	views: {
 		type: Number
 	},
-	response: {
-		type: Number
+	responses: {
+		type: Array
 	},
 	isEngaged: {
 		type: Boolean

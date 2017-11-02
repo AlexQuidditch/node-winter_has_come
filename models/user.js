@@ -11,17 +11,6 @@ const defaultValues = require('mongoose-default-values');
 mongoose.plugin( defaultValues, [ 'String' , 'Number' ]);
 
 // Schemas
-const Images = new Schema({
-	kind: {
-		type: String,
-		enum: ['thumbnail', 'detail'],
-		required: true
-	},
-	url: {
-		type: String,
-		required: true
-	}
-});
 
 const User = new Schema({
 	isAgent : {
@@ -76,6 +65,14 @@ const User = new Schema({
 		},
 		country: {
 			type: String
+		},
+		company: {
+			title: {
+				type: String
+			},
+			link: {
+				type: String
+			}
 		},
 		education: {
 			place: {
@@ -145,12 +142,20 @@ const User = new Schema({
 		},
 		teams: {
 			type: Array
+		},
+		company: {
+			activities: { type: String },
+			starts: { type: String },
+			achivements: { type: String }
 		}
 	},
 	portfolio: {
 		type: Array
 	},
 	reviews: {
+		type: Array
+	},
+	tasks: {
 		type: Array
 	}
 });

@@ -5,12 +5,16 @@ const routes = require('./routes/');
 
 server.use( '/user' , routes.user );
 server.use( '/task' , routes.task );
+server.use( '/response' , routes.response );
 server.use( '/settings' , routes.settings );
 server.use( '/team' , routes.team );
 server.use( '/review' , routes.review );
 server.use( '/auth' , routes.auth );
 server.use( '/wall' , routes.wall );
 server.use( '/upload' , routes.upload );
+
+server.use( '/users' , routes.users );
+server.use( '/agents' , routes.agents );
 
 server.listen(config.port);
 

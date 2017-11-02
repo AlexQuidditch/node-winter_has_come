@@ -1,3 +1,7 @@
+/**
+ * Created by aleksey.zabaykalsky on 17.10.17.
+ */
+
 const express = require('express');
 const server = express();
 const PortfolioModel = require('../models/portfolio').PortfolioModel;

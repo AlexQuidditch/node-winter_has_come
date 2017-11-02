@@ -57,13 +57,12 @@ server.post( '/save-draft' , ( req , res ) => {
 server.get( '/get/all' , ( req , res ) => {
 	TaskModel.find( {} , ( err , tasks ) => {
 		if ( !tasks ) {
-			return res.status(404).send('Tasks not found!')
+			return res.status(404).send('Tasks not found!');
 		}
 		if ( !err ) {
-			return res.send(tasks)
+			return res.status(200).send(tasks);
 		} else {
-			res.statusCode = 500;
-			res.send({ error: 'Server error' })
+			return res.status(500).send(err);
 		}
 	})
 });
@@ -71,12 +70,12 @@ server.get( '/get/all' , ( req , res ) => {
 server.get( '/get/:id' , ( req , res ) => {
 	TaskModel.findById( req.params.id , ( err , task ) => {
 		if ( !task ) {
-			return res.status(404).send({ error: 'Task not found!' })
+			return res.status( 404 ).send({ error: 'Task not found!' });
 		}
 		if ( !err ) {
-			return res.status( 200 ).send( task )
+			return res.status( 200 ).send( task );
 		} else {
-			res.status(500).send({ error: 'Server error' })
+			res.status( 500 ).send(err);
 		}
 	})
 });
