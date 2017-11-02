@@ -20,66 +20,46 @@ server.post( '/get/all' , ( req , res ) => {
 });
 
 server.get( '/get/:id' , ( req , res ) => {
-	WallModel.findById( req.params.id , ( error , wrapper ) => {
+	PostModel.findById( req.params.id , ( error , post ) => {
 		if ( error ) {
 			res.status( 404 ).send( error );
 		} else {
-			return res.status( 200 ).send( wrapper.posts );
+			return res.status( 200 ).send( post );
 		}
 	});
 });
 
-server.post( '/:wallID/create-post' , ( req , res ) => {
-	WallModel.findById( req.params.wallID , ( error , wrapper ) => {
-		if ( error ) {
-			res.status( 500 ).send( error );
-		} else {
-
-			const newPost = { authorID , time , content , attacments , likes , reposts , comments } = req.body;
-			const Post = Object.assign( new PostModel() , newPost );
-
-			wrapper.posts.unshift( Post );
-
-			wrapper.save( ( err , wrapper ) => {
-				if ( err ) {
-					res.status( 500 ).send( err )
-				}
-				console.log( wrapper );
-				return wrapper.save()
-					.then( response => res.status( 200 ).send( wrapper ) )
-					.catch( error => console.error(error) );
-			});
-		}
-	})
+server.post( '/create' , ( req , res ) => {
+	const newPost = new PostModel({
+		authorID , time , content ,
+		attacments , likes , reposts ,
+		comments
+	} = req.body);
+	return newPost.save()
+		.then( response => res.status( 200 ).send( newPost ) )
+		.catch( error => console.error(error) );
 });
 
-server.post( '/:wallID/edit-post/:postID' , ( req , res ) => {
-	console.log( req.body );
-	WallModel.findById( req.params.wallID , ( err  , wrapper ) => {
-		if ( !wrapper ) {
-			return res.status(404).send({ error : 'Wall not found! Recreate profile!' });
+server.post( '/edit/:postID' , ( req , res ) => {
+	PostModel.findById( req.params.postID , ( err  , post ) => {
+		if ( !post ) {
+			return res.status(404).send();
 		}
 		if ( !err ) {
-			wrapper.posts.find( post => {
-				if ( post._id == req.params.postID && Object.keys( req.body ) == 'like' ) {
-					const isLiked = post.likes.some( likeID => likeID == req.body.like );
-					if ( isLiked ) {
-						let i = post.likes.indexOf( req.body.like );
-						post.likes.splice( i , 1 );
-						return wrapper.save()
-							.then( response => res.status( 200 ).send( post.likes ) )
-							.catch( error => console.error(error) );
-					} else {
-						post.likes.push( req.body.like );
-						wrapper.save()
-							.then( response => res.status( 200 ).send( post.likes ) )
-							.catch( error => console.error(error) );
-					}
-				}
-			});
-			// wrapper.save()
-			// 	.then( response => res.status( 200 ).send( currentPost.likes ) )
-			// 	.catch( error => console.error(error) );
+			delete req.body.__v;
+			const isLiked = post.likes.some( likeID => likeID == req.body.like );
+			if ( isLiked ) {
+				let i = post.likes.indexOf( req.body.like );
+				post.likes.splice( i , 1 );
+				return post.save()
+					.then( response => res.status( 200 ).send( post ) )
+					.catch( error => console.error(error) );
+			} else {
+				post = Object.assign( post , req.body ) || post;
+				return post.save()
+					.then( response => res.status( 200 ).send( post ) )
+					.catch( error => console.error(error) );
+			}
 		} else {
 			res.status(505).send({ error: 'Server error' })
 		}

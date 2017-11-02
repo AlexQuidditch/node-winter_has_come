@@ -86,6 +86,7 @@ server.post( '/edit/:id' , ( req , res ) => {
 			return res.status(404).send('Tasks not found!')
 		}
 		if ( !err ) {
+			// delete req.body.__v;
 			task = Object.assign( task , req.body ) || task;
 			task.save()
 				.then( task => {

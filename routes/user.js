@@ -23,6 +23,7 @@ server.post( '/edit/:id' , ( req , res ) => {
 			return res.status(404).send('User not found!');
 		}
 		if ( !error ) {
+			delete req.body.__v;
 			user = Object.assign( user , req.body ) || user;
 			user.save()
 				.then( user => {

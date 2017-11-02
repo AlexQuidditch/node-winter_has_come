@@ -19,8 +19,8 @@ const User = new Schema({
 	isOnline : {
 		type: Boolean
 	},
-	wallID: {
-		type: String
+	wall: {
+		type: Array
 	},
 	personal: {
 		avatar: {
