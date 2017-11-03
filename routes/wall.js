@@ -41,27 +41,22 @@ server.post( '/create' , ( req , res ) => {
 });
 
 server.post( '/edit/:postID' , ( req , res ) => {
-	PostModel.findById( req.params.postID , ( err  , post ) => {
+	PostModel.findById( req.params.postID , ( error  , post ) => {
 		if ( !post ) {
 			return res.status(404).send();
 		}
-		if ( !err ) {
+		if ( !error ) {
 			delete req.body.__v;
-			const isLiked = post.likes.some( likeID => likeID == req.body.like );
-			if ( isLiked ) {
-				let i = post.likes.indexOf( req.body.like );
-				post.likes.splice( i , 1 );
-				return post.save()
-					.then( response => res.status( 200 ).send( post ) )
-					.catch( error => console.error(error) );
-			} else {
-				post = Object.assign( post , req.body ) || post;
-				return post.save()
-					.then( response => res.status( 200 ).send( post ) )
-					.catch( error => console.error(error) );
-			}
+			post = Object.assign( post , req.body ) || post;
+			return post.save()
+				.then( response => {
+					console.log( `Post ${ post._id } edited` );
+					res.status( 200 ).send( response )
+				})
+				.catch( error => console.error( error ) );
 		} else {
-			res.status(505).send({ error: 'Server error' })
+			console.error(error);
+			return res.status(505).send({ error: 'Server error' })
 		}
 	});
 	// PostModel.findById( req.params.postID , ( err , post ) => {

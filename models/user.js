@@ -127,6 +127,9 @@ const User = new Schema({
 	},
 	social: {
 		contacts: {
+			phone: {
+				type: String
+			},
 			vk: {
 				type: String
 			},

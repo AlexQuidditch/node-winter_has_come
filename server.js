@@ -11,6 +11,7 @@ server.use( '/dialog' , routes.dialog );
 server.use( '/user' , routes.user );
 server.use( '/wall' , routes.wall );
 server.use( '/settings' , routes.settings );
+server.use( '/upload' , routes.upload );
 
 server.use( '/task' , routes.task );
 server.use( '/response' , routes.response );

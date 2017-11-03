@@ -26,9 +26,9 @@ server.post( '/edit/:id' , ( req , res ) => {
 			delete req.body.__v;
 			user = Object.assign( user , req.body ) || user;
 			user.save()
-				.then( user => {
+				.then( response => {
 					console.log( `user ${ user._id } edited` );
-					return res.status( 200 ).send( user )
+					return res.status( 200 ).send( response )
 				})
 				.catch( error => {
 					console.error(error);
