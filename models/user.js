@@ -184,10 +184,6 @@ User.statics.authenticate = ( email , password , callback ) => {
 //hashing a password before saving it to the database
 User.pre('save', function (next) {
 	const user = this;
-	WallModel.create( { posts : [] } , ( error , wrapper ) => {
-		if ( error ) return next( error );
-		user.wallID = wrapper._id;
-	});
 	next();
 	// if ( user.personal.password.length ) {
 	// 	bcrypt.hash( user.personal.password , 11 , ( err , hash ) => {

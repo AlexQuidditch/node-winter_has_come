@@ -24,7 +24,7 @@ const Task = new Schema({
 		type: String
 	},
 	engagedID: {
-		type: Number
+		type: String
 	},
 	title: {
 		type: String
@@ -54,9 +54,6 @@ const Task = new Schema({
 	budget: {
 		type: String
 	},
-	isAgreement: {
-		type: Boolean
-	},
 	deadline: {
 		type: Date
 	},
@@ -71,6 +68,9 @@ const Task = new Schema({
 	},
 	isEngaged: {
 		type: Boolean
+	},
+	likes: {
+		type: Array
 	},
 	completed: {
 		rate: Number,
