@@ -55,7 +55,7 @@ const Task = new Schema({
 		type: String
 	},
 	deadline: {
-		type: Date
+		type: String
 	},
 	isRush: {
 		type: Boolean
