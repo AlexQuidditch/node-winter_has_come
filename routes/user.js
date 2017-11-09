@@ -8,7 +8,6 @@ server.get( '/:id' , ( req , res ) => {
 			return res.status(404).send('User not found!');
 		}
 		if ( !error ) {
-			user.personal.password = '';
 			return res.status(200).send(user);
 		} else {
 			console.error(error);
