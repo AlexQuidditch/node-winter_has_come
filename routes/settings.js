@@ -82,7 +82,7 @@ server.post( '/company/:id' , ( req , res ) => {
       user.information.company.link = req.body.link || user.information.company.link;
       user.social.company.activities = req.body.activities || user.social.company.activities;
       user.social.company.starts = req.body.starts || user.social.company.starts;
-      user.social.company.achivement = req.body.achivements || user.social.company.achivement;
+      user.social.company.achivements = req.body.achivements || user.social.company.achivements;
 
 			user.save()
 				.then( response => {
