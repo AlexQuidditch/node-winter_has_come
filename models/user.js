@@ -13,154 +13,75 @@ mongoose.plugin( defaultValues, [ 'String' , 'Number' ]);
 // Schemas
 
 const User = new Schema({
-	isAgent : {
-		type: Boolean
-	},
-	isOnline : {
-		type: Boolean
-	},
-	wall: {
-		type: Array
-	},
+	isAgent : { type: Boolean },
+	isOnline : { type: Boolean },
 	personal: {
-		avatar: {
-			type: String
-		},
-		name: {
-			type: String
-		},
-		sename: {
-			type: String
-		},
+		avatar: { type: String },
+		name: { type: String },
+		sename: { type: String },
 		email: {
 			type: String,
 			require: true,
 			unique: true
 		},
-		password: {
-			type: String
-		},
-		born: {
-			type: String
-		},
-		gender: {
-			type: String
-		},
-		caption: {
-			type: String
-		}
+		password: { type: String },
+		born: { type: String },
+		gender: { type: String },
+		caption: { type: String }
 	},
 	information: {
-		specialization: {
-			type: String
-		},
-		lastVisit: {
-			type: String
-		},
-		status: {
-			type: String
-		},
-		town: {
-			type: String
-		},
-		country: {
-			type: String
-		},
+		specialization: { type: String },
+		lastVisit: { type: String },
+		status: { type: String },
+		town: { type: String },
+		country: { type: String },
 		company: {
-			title: {
-				type: String
-			},
-			link: {
-				type: String
-			}
+			title: { type: String },
+			link: { type: String }
 		},
 		education: {
-			place: {
-				type: String
-			},
-			faculty: {
-				type: String
-			}
+			place: { type: String },
+			faculty: { type: String }
 		},
-		about: {
-			type: String
-		}
+		about: { type: String }
 	},
-	registrationDate: {
-		type: String
-	},
-	popularity: {
-		type: Number
-	},
+	registrationDate: { type: String },
+	popularity: { type: Number },
 	responses: {
-		issued: {
-			type: Number
-		},
-		positive: {
-			type: Number
-		},
-		negative: {
-			type: Number
-		}
+		issued: { type: Number },
+		positive: { type: Number },
+		negative: { type: Number }
 	},
 	ratings: {
-		mainRate: {
-			type: Number
-		},
-		average: {
-			type: Number
-		},
-		completed: {
-			type: Number
-		},
+		mainRate: { type: Number },
+		average: { type: Number },
+		completed: { type: Number },
 		tests: {
-			value: {
-				type: Number
-			},
-			total: {
-				type: Number
-			},
-			rate: {
-				type: Number
-			}
+			value: { type: Number },
+			total: { type: Number },
+			rate: { type: Number }
 		}
 	},
 	social: {
 		contacts: {
-			phone: {
-				type: String
-			},
-			vk: {
-				type: String
-			},
-			fb: {
-				type: String
-			},
-			skype: {
-				type: String
-			},
-			telegram: {
-				type: String
-			}
+			phone: { type: String },
+			vk: { type: String },
+			fb: { type: String },
+			skype: { type: String },
+			telegram: { type: String }
 		},
-		teams: {
-			type: Array
-		},
+		teams: { type: Array },
 		company: {
 			activities: { type: String },
 			starts: { type: String },
 			achivements: { type: String }
 		}
 	},
-	portfolio: {
-		type: Array
-	},
-	reviews: {
-		type: Array
-	},
-	tasks: {
-		type: Array
-	}
+	wall: { type: Array },
+	friends: { type: Array },
+	portfolio: { type: Array },
+	reviews: { type: Array },
+	tasks: { type: Array }
 });
 
 User.statics.authenticate = ( email , password , callback ) => {
