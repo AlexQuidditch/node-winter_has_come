@@ -90,11 +90,11 @@ server.post( '/company/:id' , ( req , res ) => {
 					return res.status( 200 ).send( response )
 				})
 				.catch( error => {
-					console.error(error);
+					console.error( error );
 					return res.status( 500 ).send( error );
 				});
 		} else {
-			console.error(error);
+			console.error( error );
 			return res.status(500).send('Server error')
 		}
 	})

@@ -19,7 +19,7 @@ const upload = multer({
 });
 
 // upload image
-server.post( '/', upload.array( 'image', 5 ), ( req, res ) => {
+server.post( '/', upload.array( 'image', 5 ), ( req , res ) => {
 	const images = req.files.map( file => {
 		return { filename , originalname } = file;
 	});
@@ -31,13 +31,15 @@ server.post( '/', upload.array( 'image', 5 ), ( req, res ) => {
 
 // get image with id
 server.get( '/:id', ( req, res ) => {
-	ImageModel.findOne( { _id : req.params.id } , ( err, image ) => {
+	ImageModel.findOne( { _id : req.params.id } , ( error , image ) => {
 		if ( !image ) {
-			return res.status(404).send('Picture not found!')
-		} else if ( err ) {
-			return res.status(500).send('Internal server error')
+			return res.status(404).send('Picture not found!');
+		}
+		if ( error ) {
+			console.error( error );
+			return res.status(500).send( error );
 		} else {
-			fs.createReadStream( path.resolve( UPLOAD_PATH, image.filename ) ).pipe( res );
+			return fs.createReadStream( path.resolve( UPLOAD_PATH, image.filename ) ).pipe( res );
 		}
 	})
 });
