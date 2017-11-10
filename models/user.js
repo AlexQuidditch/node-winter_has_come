@@ -78,7 +78,10 @@ const User = new Schema({
 		}
 	},
 	wall: { type: Array },
-	friends: { type: Array },
+	friends: {
+		requests: { type: Array },
+		accepted: { type: Array }
+	},
 	portfolio: { type: Array },
 	reviews: { type: Array },
 	tasks: { type: Array }
